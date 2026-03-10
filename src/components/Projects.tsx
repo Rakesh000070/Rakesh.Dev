@@ -23,7 +23,7 @@ const projects = [
     description: 'A full-stack web application to manage student records, attendance, and academic data. Implemented RESTful APIs following MVC architecture.',
     image: 'images/coming-soon.jpg',
     tags: ['React', 'Node.js', 'Express', 'MongoDB'],
-    github: 'https://github.com/Rakesh000070',
+    github: '#',
     demo: '#',
   },
 ];
