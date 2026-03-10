@@ -16,7 +16,7 @@ export default function About() {
           <div className="absolute -inset-4 bg-primary/20 rounded-2xl blur-2xl group-hover:bg-primary/30 transition-all duration-500" />
           <div className="relative aspect-square rounded-2xl overflow-hidden border border-white/10">
             <img
-              src="images/My-Img.jpg"
+              src="/images/My-Img.jpg"
               alt="Profile"
               className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-110 group-hover:scale-100"
               referrerPolicy="no-referrer"

@@ -5,7 +5,7 @@ const projects = [
   {
     title: 'CHAKRAVYUH — AI OSINT Engine',
     description: 'A multi-modal AI OSINT & Intelligence Fusion Engine using Google Gemini for synthesis and real-time search grounding. Features a tactical dashboard with D3.js force-directed graphs.',
-    image: 'images/Screenshot (10).png',
+    image: '/images/Screenshot (10).png',
     tags: ['React 19', 'Google Gemini', 'D3.js', 'Tailwind CSS', 'Recharts'],
     github: 'https://github.com/Rakesh000070/Chakra-Vyuh',
     demo: 'https://chakravyuh-26.netlify.app/',
@@ -13,7 +13,7 @@ const projects = [
   {
     title: 'Job and Internship Finder Platform',
     description: 'A portal enabling recruiters to post job listings and candidates to apply through a secure web interface. Integrated resume upload and media management using Cloudinary.',
-    image: 'images/coming-soon.jpg',
+    image: 'images/comingsoon.png',
     tags: ['React', 'Node.js', 'Express', 'MongoDB', 'Cloudinary'],
     github: '#',
     demo: '#',
@@ -21,7 +21,7 @@ const projects = [
   {
     title: 'Smart Student Management System',
     description: 'A full-stack web application to manage student records, attendance, and academic data. Implemented RESTful APIs following MVC architecture.',
-    image: 'images/coming-soon.jpg',
+    image: '/images/coming-soon.jpg',
     tags: ['React', 'Node.js', 'Express', 'MongoDB'],
     github: '#',
     demo: '#',
