@@ -13,7 +13,7 @@ const projects = [
   {
     title: 'Job and Internship Finder Platform',
     description: 'A portal enabling recruiters to post job listings and candidates to apply through a secure web interface. Integrated resume upload and media management using Cloudinary.',
-    image: 'images/comingsoon.png',
+    image: '/images/comingsoon.png',
     tags: ['React', 'Node.js', 'Express', 'MongoDB', 'Cloudinary'],
     github: '#',
     demo: '#',
@@ -69,10 +69,14 @@ export default function Projects() {
           {projects.map((project, i) => (
             <motion.div
               key={project.title}
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.2 }}
+              initial={{ opacity: 0, y: 30, scale: 0.98 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ 
+                duration: 0.6, 
+                delay: i * 0.1,
+                ease: [0.22, 1, 0.36, 1]
+              }}
               className="group relative"
             >
               <div className="relative aspect-video rounded-3xl overflow-hidden mb-6">

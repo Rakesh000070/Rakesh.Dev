@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { Code2, Database, Globe, Layout, Server,  } from 'lucide-react';
+import { Code2, Database, Globe, Layout, Server } from 'lucide-react';
 
 const skills = [
   { name: 'Web Technologies', icon: <Layout size={24} />, items: ['HTML', 'CSS', 'JavaScript', 'React.js'], color: 'from-blue-500 to-cyan-400' },

@@ -1,11 +1,26 @@
 @import "tailwindcss";
 
+:root {
+  --primary: #EB5E28;
+  --bg-dark: #252422;
+  --secondary-dark: #403D39;
+  --neutral: #CCC5B9;
+  --light: #FFFCF2;
+}
+
+:root.light {
+  --bg-dark: #FFFCF2;
+  --light: #252422;
+  --secondary-dark: #E6E2D3;
+  --neutral: #403D39;
+}
+
 @theme {
-  --color-primary: #EB5E28;
-  --color-bg-dark: #252422;
-  --color-secondary-dark: #403D39;
-  --color-neutral: #CCC5B9;
-  --color-light: #FFFCF2;
+  --color-primary: var(--primary);
+  --color-bg-dark: var(--bg-dark);
+  --color-secondary-dark: var(--secondary-dark);
+  --color-neutral: var(--neutral);
+  --color-light: var(--light);
 
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Space Grotesk", sans-serif;
@@ -13,7 +28,7 @@
 
 @layer base {
   body {
-    @apply bg-bg-dark text-light font-sans selection:bg-primary selection:text-white;
+    @apply bg-bg-dark text-light font-sans selection:bg-primary selection:text-white transition-colors duration-300;
     scroll-behavior: smooth;
   }
 
@@ -24,11 +39,11 @@
 
 @layer utilities {
   .glass {
-    @apply bg-white/5 backdrop-blur-lg border border-white/10 shadow-xl;
+    @apply bg-white/5 backdrop-blur-lg border border-white/10 shadow-xl dark:bg-black/5;
   }
   
   .glass-dark {
-    @apply bg-black/20 backdrop-blur-md border border-white/5 shadow-2xl;
+    @apply bg-black/20 backdrop-blur-md border border-white/5 shadow-2xl dark:bg-white/10;
   }
 
   .text-gradient {
