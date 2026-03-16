@@ -1,7 +1,7 @@
 import { useState, useRef, FormEvent } from 'react';
-import { motion } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
 import emailjs from '@emailjs/browser';
-import { Send, Github, Linkedin, Twitter, Mail, MapPin, Phone, CheckCircle2, AlertCircle } from 'lucide-react';
+import { Send, Github, Linkedin, Twitter, Mail, MapPin, Phone, CheckCircle2, AlertCircle, X, PartyPopper } from 'lucide-react';
 
 export default function Contact() {
   const formRef = useRef<HTMLFormElement>(null);
@@ -10,15 +10,36 @@ export default function Contact() {
 
   const sendEmail = (e: FormEvent) => {
     e.preventDefault();
-    if (!formRef.current) return;
+    console.log('Form submission started');
+    if (!formRef.current) {
+      console.error('Form reference is null');
+      return;
+    }
 
     setIsSending(true);
     setStatus('idle');
 
-    // Replace these placeholders with your actual EmailJS credentials
-    const SERVICE_ID = 'YOUR_SERVICE_ID';
-    const TEMPLATE_ID = 'YOUR_TEMPLATE_ID';
-    const PUBLIC_KEY = 'YOUR_PUBLIC_KEY';
+    const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+    const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+    const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
+    console.log('EmailJS Config Check:', { 
+      hasServiceId: !!SERVICE_ID, 
+      hasTemplateId: !!TEMPLATE_ID, 
+      hasPublicKey: !!PUBLIC_KEY 
+    });
+
+    if (!SERVICE_ID || !TEMPLATE_ID || !PUBLIC_KEY) {
+      let missing = [];
+      if (!SERVICE_ID) missing.push('Service ID');
+      if (!TEMPLATE_ID) missing.push('Template ID');
+      if (!PUBLIC_KEY) missing.push('Public Key');
+      
+      console.error(`EmailJS configuration missing: ${missing.join(', ')}`);
+      setStatus('error');
+      setIsSending(false);
+      return;
+    }
 
     emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, formRef.current, PUBLIC_KEY)
       .then((result) => {
@@ -26,13 +47,13 @@ export default function Contact() {
           setStatus('success');
           formRef.current?.reset();
       }, (error) => {
-          console.error('Failed to send email:', error.text);
+          console.error('Failed to send email:', error);
           setStatus('error');
+          // Reset error status after 5 seconds
+          setTimeout(() => setStatus('idle'), 5000);
       })
       .finally(() => {
           setIsSending(false);
-          // Reset status after 5 seconds
-          setTimeout(() => setStatus('idle'), 5000);
       });
   };
 
@@ -171,17 +192,6 @@ export default function Contact() {
                 {!isSending && <Send size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />}
               </button>
 
-              {status === 'success' && (
-                <motion.div 
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="flex items-center gap-2 text-emerald-400 bg-emerald-400/10 p-4 rounded-xl border border-emerald-400/20"
-                >
-                  <CheckCircle2 size={18} />
-                  <span>Message sent successfully! I'll get back to you soon.</span>
-                </motion.div>
-              )}
-
               {status === 'error' && (
                 <motion.div 
                   initial={{ opacity: 0, y: 10 }}
@@ -189,13 +199,65 @@ export default function Contact() {
                   className="flex items-center gap-2 text-rose-400 bg-rose-400/10 p-4 rounded-xl border border-rose-400/20"
                 >
                   <AlertCircle size={18} />
-                  <span>Oops! Something went wrong. Please try again later.</span>
+                  <span className="text-sm">
+                    {!import.meta.env.VITE_EMAILJS_SERVICE_ID || !import.meta.env.VITE_EMAILJS_TEMPLATE_ID || !import.meta.env.VITE_EMAILJS_PUBLIC_KEY 
+                      ? `Configuration missing: ${[
+                          !import.meta.env.VITE_EMAILJS_SERVICE_ID && 'Service ID',
+                          !import.meta.env.VITE_EMAILJS_TEMPLATE_ID && 'Template ID',
+                          !import.meta.env.VITE_EMAILJS_PUBLIC_KEY && 'Public Key'
+                        ].filter(Boolean).join(', ')}. Please check your settings.` 
+                      : 'Oops! Something went wrong. Please try again later.'}
+                  </span>
                 </motion.div>
               )}
             </form>
           </motion.div>
         </div>
       </div>
+
+      {/* Success Popup Modal */}
+      <AnimatePresence>
+        {status === 'success' && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center px-6">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setStatus('idle')}
+              className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              className="relative glass p-8 md:p-12 rounded-3xl max-w-md w-full text-center shadow-2xl"
+            >
+              <button 
+                onClick={() => setStatus('idle')}
+                className="absolute top-4 right-4 p-2 text-neutral hover:text-primary transition-colors"
+              >
+                <X size={24} />
+              </button>
+              
+              <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center text-primary mx-auto mb-6">
+                <PartyPopper size={40} />
+              </div>
+              
+              <h4 className="text-3xl font-bold mb-4">Message Sent!</h4>
+              <p className="text-neutral text-lg mb-8">
+                Thank you for reaching out, Rakesh! Your message has been received. I'll get back to you as soon as possible.
+              </p>
+              
+              <button
+                onClick={() => setStatus('idle')}
+                className="w-full py-4 bg-primary text-white rounded-xl font-bold hover:bg-orange-600 transition-colors"
+              >
+                Awesome!
+              </button>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }
