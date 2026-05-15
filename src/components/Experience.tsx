@@ -2,6 +2,14 @@ import { motion } from 'motion/react';
 import { Briefcase, GraduationCap } from 'lucide-react';
 
 const timeline = [
+    {
+    type: 'education',
+    title: 'BTech in Information Technology',
+    company: 'NIST University',
+    period: 'Nov 2023 - Present',
+    description: 'Currently pursuing BTech with a focus on web development and cloud computing. CGPA: 8.05/10.',
+    icon: <GraduationCap size={20} />,
+  },
   {
     type: 'experience',
     title: 'Summer Intern',
