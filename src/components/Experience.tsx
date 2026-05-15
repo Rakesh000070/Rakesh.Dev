@@ -3,11 +3,11 @@ import { Briefcase, GraduationCap } from 'lucide-react';
 
 const timeline = [
     {
-    type: 'education',
-    title: 'BTech in Information Technology',
-    company: 'NIST University',
-    period: 'Nov 2023 - Present',
-    description: 'Currently pursuing BTech with a focus on web development and cloud computing. CGPA: 8.05/10.',
+    type: 'achievement',
+    title: 'Open Source Contributor - GSSoC 26',
+    company: 'GirlScript Summer of Code',
+    period: 'May 2026 - Aug 2026',
+    description: 'Selected as an open source contributor in one of India\'s largest open source programs. Actively contributing to real-world projects using React.js, Node.js, and JavaScript.',
     icon: <GraduationCap size={20} />,
   },
   {
